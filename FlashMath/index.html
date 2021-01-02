@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Math!</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div id="information-container" style="display: none;">
+        <div id="timer-box">
+            <span id="time-text">Time Left: </span> 
+            <span id="timer"></span>
+        </div>
+        <div id="problem-count">0/100</div>
+    </div>
+    <div class="button-container">
+        <button id="switch-topic-button" onclick="switchTopic()" style="display: none;">Switch Topic</button>
+    </div>
+    
+    <h1 id="title">Choose Your Topic</h1>
+    <div id="topics-container">
+        <button class="topic-box addition">+</button>
+        <button class="topic-box subtraction">-</button>
+        <button class="topic-box multiplication">&times</button>
+        <button class="topic-box division">&divide</button>
+        <div class="break"></div>
+        <!-- <button class="all-topics-button">ALL</button> -->
+    </div>
+    <div id="problem-box" style="display:none">
+        <div class="grid-container">
+            <div class="grid-item blank"></div>
+            <div class="grid-item top-number"></div>
+            <div class="grid-item symbol"></div>
+            <div class="grid-item bottom-number"></div>
+        </div>  
+        <div class="answer-container">
+            <form id="answer-form" onsubmit="mainDriver(); return false">
+                <input type="number" class="answer-box" name="answer-box" autofocus="autofocus" onfocus="this.value=''">
+            </form>
+        </div>
+        
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
