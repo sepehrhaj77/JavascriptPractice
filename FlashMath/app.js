@@ -1,21 +1,33 @@
-//TIMER CODE
-document.getElementById('timer').innerText = "5:30";
+//TODO: FIX THAT IT GOES BACK TO MAIN SCREEN WHEN DONE
 
-function startTimer(){
-    var presentTime = document.getElementById('timer').innerText;
-    var timeArray = presentTime.split(/[:]+/);
-    var m = timeArray[0];
-    var s = checkSecond((timeArray[1] - 1)); //decrement the seconds and update display
-    if(s==59){m=m-1}
-    if(m<0){
-        alert('timer completed');
-        return;
-    }
-    
-    document.getElementById('timer').innerText = m + ":" + s;
-    console.log(m)
-    setTimeout(startTimer, 1000); //call the function again in one second
+//TIMER CODE
+document.getElementById('timer').innerText = "05:00";
+var interval;
+function startTimer(duration, display) {
+    var timer = duration;
+    var minutes, seconds;
+    interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            alert('timer completed');
+            clearInterval(interval);
+        }
+        
+    }, 1000);
 }
+function callTimer(){
+    var duration = 60*5;
+    var display = document.querySelector('#timer');
+    startTimer(duration, display);
+}
+
 
 //helper function to update seconds display properly
 function checkSecond(sec) {
@@ -131,7 +143,7 @@ function loadDivision(){
     problems = [];
     for(var i=0; i<100; i++){
         factor1 = Math.floor(Math.random() * 13);                  //multiply two numbers first to ensure generated factors are divisible 
-        factor2 = Math.floor(Math.random() * 13);                  //(if we generate two random numbers to divide, they might not work out to a whole number)
+        factor2 = Math.floor(Math.random() * 12) + 1;              //plus one to exclude 0 as a possibility
         product = factor1 * factor2;
         problems.push({num1: product, num2: factor1, ans: factor2});  
     }
@@ -183,4 +195,8 @@ function switchTopic(){
     document.getElementById('topics-container').style.display = "flex";
     document.getElementById('title').style.display = "flex";
     document.getElementById('information-container').style.display = "none";
+    clearInterval(interval);
+    document.getElementById('timer').innerText = "05:00";
+    document.getElementById('problem-count').innerText = "0/100";
+    probCount = 0;
 }
