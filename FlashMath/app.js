@@ -95,7 +95,7 @@ function loadAddition(){
     var num2;
     var ans;
     problems = [];
-    for(var i=0; i<3; i++){
+    for(var i=0; i<MAX_PROBLEMS; i++){
         num1 = Math.floor(Math.random() * 31);                  //first number between 0-30
         num2 = Math.floor(Math.random() * 31);                  //second number between 0-30
         ans = num1+num2;
@@ -176,7 +176,7 @@ function mainDriver(){
     var sym = document.getElementsByClassName('symbol')[0].innerHTML;
     if(verifyAnswer()){
         probCount+=1;
-        if(probCount>=3){
+        if(probCount>=MAX_PROBLEMS){
             alert("All problems completed!")
         }
         else{
