@@ -1,5 +1,5 @@
 //TODO: FIX THAT IT GOES BACK TO MAIN SCREEN WHEN DONE
-
+const MAX_PROBLEMS = 100
 //TIMER CODE
 document.getElementById('timer').innerText = "05:00";
 var interval;
@@ -57,7 +57,6 @@ function topicClicked(topic){
     document.getElementById('switch-topic-button').style.display = "flex";
     document.getElementById('problem-box').style.display = "flex";
     var sym;
-    startTimer();
     switch(topic){
         case "addition":
             sym = "+";
@@ -96,9 +95,9 @@ function loadAddition(){
     var num2;
     var ans;
     problems = [];
-    for(var i=0; i<100; i++){
-        num1 = Math.floor(Math.random() * 21);                  //first number between 0-20
-        num2 = Math.floor(Math.random() * 21);                  //second number between 0-20
+    for(var i=0; i<3; i++){
+        num1 = Math.floor(Math.random() * 31);                  //first number between 0-30
+        num2 = Math.floor(Math.random() * 31);                  //second number between 0-30
         ans = num1+num2;
         problems.push({num1: num1, num2: num2, ans: ans});  
     }
@@ -111,7 +110,7 @@ function loadSubtraction(){
     var num2;
     var ans;
     problems = [];
-    for(var i=0; i<100; i++){
+    for(var i=0; i<MAX_PROBLEMS; i++){
         num1 = Math.floor(Math.random() * 16) + 5;              //first number must be between 5-20
         num2 = Math.floor(Math.random() * (num1-1)) + 1;        //second number must be less than first
         ans = num1-num2;
@@ -125,7 +124,7 @@ function loadMultiplication(){
     var num2;
     var ans;
     problems = [];
-    for(var i=0; i<100; i++){
+    for(var i=0; i<MAX_PROBLEMS; i++){
         num1 = Math.floor(Math.random() * 13);                  //first number between 0-12
         num2 = Math.floor(Math.random() * 13);                  //second number between 0-12
         ans = num1*num2;
@@ -141,7 +140,7 @@ function loadDivision(){
     var factor2;
     var product;
     problems = [];
-    for(var i=0; i<100; i++){
+    for(var i=0; i<MAX_PROBLEMS; i++){
         factor1 = Math.floor(Math.random() * 13);                  //multiply two numbers first to ensure generated factors are divisible 
         factor2 = Math.floor(Math.random() * 12) + 1;              //plus one to exclude 0 as a possibility
         product = factor1 * factor2;
@@ -175,18 +174,20 @@ function numberUpdater(sym){
 function mainDriver(){
     
     var sym = document.getElementsByClassName('symbol')[0].innerHTML;
-    console.log(sym)
     if(verifyAnswer()){
         probCount+=1;
-        document.getElementById('problem-count').innerText = probCount+"/100";
-        numberUpdater(sym);
+        if(probCount>=3){
+            alert("All problems completed!")
+        }
+        else{
+            document.getElementById('problem-count').innerText = `${(probCount+1)}/${MAX_PROBLEMS}`;
+            numberUpdater(sym);
+        }
     }
     else{
         alert("wrong!");
     }
-    if(probCount>99){
-        alert("All problems completed!")
-    }
+    
 }
 
 //FUNCTION TO BRING BACK TOPICS
@@ -197,6 +198,13 @@ function switchTopic(){
     document.getElementById('information-container').style.display = "none";
     clearInterval(interval);
     document.getElementById('timer').innerText = "05:00";
-    document.getElementById('problem-count').innerText = "0/100";
+    document.getElementById('problem-count').innerText = "1/100";
     probCount = 0;
 }
+
+//set problem counter
+function initializeProbCount(){
+    document.getElementById('problem-count').innerText = `1/${MAX_PROBLEMS}`
+}
+
+initializeProbCount()
